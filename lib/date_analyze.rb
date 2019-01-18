@@ -1,4 +1,6 @@
 #!/usr/bin/ruby
+
+# Class for analyzing dates
 class Analyzer
 
 date = ARGV[0].to_s
