@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+class Analyzer
 
 date = ARGV[0].to_s
 wrong = false
@@ -220,4 +221,5 @@ else
   print "Chinski znak zodiaku: " + zodiac_result + "\n"
   print "Numerologiczna cyfra: " + date_value + "\n"
   print "Cechy charakteru: " + character_string + "\n"
+end
 end
