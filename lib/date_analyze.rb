@@ -63,31 +63,23 @@ class Analyzer
     end
   end
 
+  # Metoda zwiekszajaca wartosc daty
+  def self.increase_date_value(value)
+    total = 0
+    while value > 0
+      increase_value = value % 10
+      value /= 10
+      total += increase_value
+    end
+    return total
+  end
+
   # Metoda obliczajaca wartosc podanej daty sumujac wszystkie jej cyfry
   def self.calculate_date_value(year, month, day)
     date_value = 0
-    year_value = year
-    month_value = month
-    day_value = day
-
-    while year_value > 0
-    	d = year_value % 10
-    	year_value = year_value / 10
-    	date_value = date_value + d
-    end
-
-    while month_value > 0
-  	  d = month_value % 10
-  	  month_value = month_value / 10
-  	  date_value = date_value + d
-    end
-
-    while day_value > 0
-  	  d = day_value % 10
-  	  day_value = day_value / 10
-  	  date_value = date_value + d
-    end
-
+    date_value += increase_date_value(year)
+    date_value += increase_date_value(month)
+    date_value += increase_date_value(day)
     return date_value
   end
 
