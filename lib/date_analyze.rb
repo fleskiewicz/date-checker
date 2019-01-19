@@ -53,11 +53,11 @@ class Analyzer
     if date.year_valid?
       puts "wrong year"
     end
-    
+
     if date.month_valid?
       puts "wrong month"
     end
-  
+
     if date.day_valid?
       puts "wrong day"
     end
@@ -86,7 +86,7 @@ class Analyzer
   # Metoda sumujaca otrzymana wartosc do momentu az wynikowa bedzie jednocyfrowa
   def self.reduce_date_value(date_value)
     while date_value > 9
-  	  date_value = date_value.digits(10).sum
+      date_value = date_value.digits(10).sum
     end
     return date_value
   end
