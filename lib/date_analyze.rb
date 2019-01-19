@@ -70,21 +70,21 @@ class Analyzer
     return total
   end
 
-  # Metoda obliczajaca wartosc podanej daty sumujac wszystkie jej cyfry
-  def self.calculate_date_value(year, month, day)
-    date_value = 0
-    date_value += increase_date_value(year)
-    date_value += increase_date_value(month)
-    date_value += increase_date_value(day)
-    return date_value
-  end
-
   # Metoda sumujaca otrzymana wartosc do momentu az wynikowa bedzie jednocyfrowa
   def self.reduce_date_value(date_value)
     while date_value > 9
       date_value = date_value.digits(10).sum
     end
     return date_value
+  end
+
+  # Metoda obliczajaca wartosc podanej daty sumujac wszystkie jej cyfry
+  def self.calculate_date_value(year, month, day)
+    date_value = 0
+    date_value += increase_date_value(year)
+    date_value += increase_date_value(month)
+    date_value += increase_date_value(day)
+    return reduce_date_value(date_value)
   end
 
   # Metoda drukujaca wynik analizy
@@ -97,13 +97,12 @@ class Analyzer
 
   check_argument_length(date)
   check_argument_chars(date)
-  date = split_date(date)
+  date = split_argument(date)
   date = Date.new(date)
   print_bad_arguments(date)
-  zodiac_result = ChineseZodiac.new().get_chinese_zodiac(date.get_year)
+  zodiac_result = ChineseZodiac.new.get_chinese_zodiac(date.get_year)
   date_value = calculate_date_value(date.get_year, date.get_month, date.get_day)
-  date_value = reduce_date_value(date_value)
-  character_string = Personality.new().get_characteristics(date_value)
+  character_string = Personality.new.get_characteristics(date_value)
   date_value = date_value.to_s
   print_result(date.to_string, zodiac_result, date_value, character_string)
 end
