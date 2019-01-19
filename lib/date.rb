@@ -8,88 +8,35 @@ class Date
 
   # Metoda sprawdzajaca czy rok miesci sie w przedziale 1900-2019
   def year_valid?()
-    if !(@year < 1900)
-      if @year > 2019
-        return true
-      end
-    else
-      return true
+    if (@year > 1900) && (@year < 2020)
+        return false
     end
-    return false
+    return true
   end
 
   # Metoda sprawdzajaca czy ilosc miesiecy znajduje sie w przedziale 1-12
   def month_valid?()
-    if !(@month < 1) 
-      if @month > 12
-        return true
-      end
-    else
-      return true
+    if (@month > 0) && (@month < 13)
+      return false
     end
-    return false
+    return true
   end
 
-  # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 0
+  # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 1
   # i nie wiekszy od liczby dni w miesiacu
   def day_valid?()
     wrong_day = false
 
-    # Sprawdzenie czy ilosc dni nie jest mniejsza od 0
-    if @day < 1
+    # Sprawdzenie czy ilosc dni nie jest mniejsza od 1 lub wieksza od 31
+    if (@day < 1 || @day > 31)
       wrong_day = true
     end
-
+    
     # Sprwdzenie czy ilosc dni w danym miesiacu sie zgadza
-    case @month
-    when 1
-      if @day > 31
-        wrong_day = true
-      end
-    when 2
-      if @day > 28
-        wrong_day = true
-      end
-    when 3
-      if @day > 31
-        wrong_day = true
-      end
-    when 4
-      if @day > 30
-        wrong_day = true
-      end
-    when 5
-      if @day > 31
-        wrong_day = true
-      end
-    when 6
-      if @day > 30
+    if (@month==4 || @month==6 || @month==9 || @month==11) && @day > 30
       wrong_day = true
-      end
-    when 7
-      if @day > 31
-        wrong_day = true
-      end
-    when 8
-      if @day > 31
-        wrong_day = true
-      end
-    when 9
-      if @day > 30
-        wrong_day = true
-      end
-    when 10
-      if @day > 31
-        wrong_day = true
-      end
-    when 11
-      if @day > 30
-        wrong_day = true
-      end
-    when 12
-      if @day > 31
-        wrong_day = true
-      end  
+    elsif @month == 2 && @day > 28
+      wrong_day = true
     else
       "something is wrong with month"
     end
