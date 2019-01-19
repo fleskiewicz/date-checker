@@ -1,9 +1,9 @@
 # Klasa zawierajaca metody pozwalajacymi okreslic znak chinskiego zodiaku
 class ChineseZodiac
-  # Metoda zwracajaca chinski znak zodiaku
-  def get_chinese_zodiac(year)
-    # slownik chinskiego zodiaku
-    chinese_zodiacs = {
+
+  def initialize
+    # Slownik chinskiego zodiaku
+    @chinese_zodiacs = {
       0 => "Szczur",
       1 => "Bawół",
       2 => "Tygyrs",
@@ -17,8 +17,12 @@ class ChineseZodiac
       10 => "Pies",
       11 => "Świnia"
     }
+  end
+
+  # Metoda zwracajaca chinski znak zodiaku
+  def get_chinese_zodiac(year)
     zodiac_result = (year - 1900) % 12
-    zodiac_result = chinese_zodiacs[zodiac_result]
+    zodiac_result = @chinese_zodiacs[zodiac_result]
     return zodiac_result
   end
 end
