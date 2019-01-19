@@ -32,7 +32,7 @@ class Analyzer
   end
 
   # Metoda dzielaca argument na rok/miesiac/dzien
-  def self.split_date(date_string)
+  def self.split_argument(date_string)
     counter = 0
     splitted = ['', '', '']
     date_string.each_char do |char|
@@ -49,16 +49,16 @@ class Analyzer
   end
 
   # Metoda drukujaca komunikaty o zlych argumentach
-  def self.print_bad_arguments(wrong_year, wrong_month, wrong_day)
-    if wrong_year
+  def self.print_bad_arguments(date)
+    if date.year_valid?
       puts "wrong year"
     end
     
-    if wrong_month
+    if date.month_valid?
       puts "wrong month"
     end
   
-    if wrong_day
+    if date.day_valid?
       puts "wrong day"
     end
   end
@@ -99,14 +99,11 @@ class Analyzer
     print "Cechy charakteru: " + character_string + "\n"
   end
 
-  wrong = check_argument_length(date)
-  wrong = check_argument_chars(date)
+  check_argument_length(date)
+  check_argument_chars(date)
   date = split_date(date)
   date = Date.new(date)
-  wrong_year = date.year_valid?
-  wrong_month = date.month_valid?
-  wrong_day = date.day_valid?
-  print_bad_arguments(wrong_year, wrong_month, wrong_day)
+  print_bad_arguments(date)
   zodiac_result = ChineseZodiac.new().get_chinese_zodiac(date.get_year)
   date_value = calculate_date_value(date.get_year, date.get_month, date.get_day)
   date_value = reduce_date_value(date_value)
