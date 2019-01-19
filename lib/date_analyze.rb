@@ -1,5 +1,9 @@
 #!/usr/bin/ruby
 
+require './date.rb'
+require './personality.rb'
+require './chinese_zodiac.rb'
+
 # Klasa do analizy daty
 class Analyzer
 
@@ -49,106 +53,6 @@ class Analyzer
     end
     return splitted
   end
-  
-  # Metoda sprawdzajaca czy rok miesci sie w przedziale 1900-2019
-  def self.year_valid?(year)
-    if !(year < 1900)
-      if year > 2019
-        return true
-      end
-    else
-      return true
-    end
-    return false
-  end
-  
-  # Metoda sprawdzajaca czy ilosc miesiecy znajduje sie w przedziale 1-12
-  def self.month_valid?(month)
-    if !(month < 1) 
-      if month > 12
-        return true
-      end
-    else
-      return true
-    end
-    return false
-  end
-
-  # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 0
-  # i nie wiekszy od liczby dni w miesiacu
-  def self.day_valid?(day, month, year)
-    wrong_day = false
-
-    # Sprawdzenie czy ilosc dni nie jest mniejsza od 0
-    if day < 1
-      wrong_day = true
-    end
-
-    # Sprwdzenie czy ilosc dni w danym miesiacu sie zgadza
-    case month
-    when 1
-      if day > 31
-        wrong_day = true
-      end
-    when 2
-      if day > 28
-        wrong_day = true
-      end
-    when 3
-      if day > 31
-        wrong_day = true
-      end
-    when 4
-      if day > 30
-        wrong_day = true
-      end
-    when 5
-      if day > 31
-        wrong_day = true
-      end
-    when 6
-      if day > 30
-      wrong_day = true
-      end
-    when 7
-      if day > 31
-        wrong_day = true
-      end
-    when 8
-      if day > 31
-        wrong_day = true
-      end
-    when 9
-      if day > 30
-        wrong_day = true
-      end
-    when 10
-      if day > 31
-        wrong_day = true
-      end
-    when 11
-      if day > 30
-        wrong_day = true
-      end
-    when 12
-      if day > 31
-        wrong_day = true
-      end  
-    else
-      "something is wrong with month"
-    end
-
-    # sprawdzenie w przypadku roku przestepnego
-    if (year % 4 == 0 && year % 100 != 100) || (year % 400 == 0)
-      if month == 2
-        wrong_day = false
-        if day < 1 || day > 29
-          wrong_day = true
-        end
-      end
-    end
-    return wrong_day
-  end
 
   # Metoda drukujaca komunikaty o zlych argumentach
   def self.print_bad_arguments(wrong_year, wrong_month, wrong_day)
@@ -163,27 +67,6 @@ class Analyzer
     if wrong_day
       puts "wrong day"
     end
-  end
-
-  # Metoda zwracajaca chinski znak zodiaku
-  def self.get_chinese_zodiac(year)
-    chinese_zodiacs = {
-      0 => "Szczur",
-      1 => "Bawół",
-      2 => "Tygyrs",
-      3 => "Królik",
-      4 => "Smok",
-      5 => "Wąż",
-      6 => "Koń",
-      7 => "Koza",
-      8 => "Małpa",
-      9 => "Kogut",
-      10 => "Pies",
-      11 => "Świnia"
-    }
-    zodiac_result = (year - 1900) % 12
-    zodiac_result = chinese_zodiacs[zodiac_result]
-    return zodiac_result
   end
 
   # Metoda obliczajaca wartosc podanej daty sumujac wszystkie jej cyfry
@@ -222,28 +105,6 @@ class Analyzer
     return date_value
   end
 
-  # Metoda tworzaca stringa z wybranymi cechami charakteru
-  def self.get_characteristics(date_value)
-    # slownik cech charakteru
-    characteristics = {
-      1 => ["ambitność", "racjonalizm", "egocentryzm"],
-      2 => ["wyrozumiałość", "dyplomacja", "niepewność"],
-      3 => ["charyzma", "twórczy", "lekkomyślność"],
-      4 => ["zorganizowanie", "odpowiedzialność", "szorstkość"],
-      5 => ["śmiałość", "pomysłowość", "niecierpliwość"],
-      6 => ["wrażliwość", "zrównoważenie", "lenistwo"],
-      7 => ["szlachetność", "elegancja", "samotność"],
-      8 => ["nieustepliowść", "samokontrola", "radykalizm"],
-      9 => ["wielkoduszność", "wyrozumiałość", "wybuchowość"]
-    }
-    character_string = String.new
-    characteristics[date_value].each do |c|
-      character_string << c
-      character_string << ", "
-    end
-    character_string = character_string[0..-3]
-  end
-
   # Metoda sprowadzajaca date do czytelnego formatu
   def self.convert_to_date(year, month, day)
     year = year.to_s
@@ -264,17 +125,15 @@ class Analyzer
   wrong = check_argument_chars(date)
   date = split_date(date, wrong)
   # konwersja na inta w celu porownywania
-  year = date[0].to_i
-  month = date[1].to_i
-  day = date[2].to_i
-  wrong_year = year_valid?(year)
-  wrong_month = month_valid?(month)
-  wrong_day = day_valid?(day, month, year)
+  date = Date.new(date)
+  wrong_year = date.year_valid?
+  wrong_month = date.month_valid?
+  wrong_day = date.day_valid?
   print_bad_arguments(wrong_year, wrong_month, wrong_day)
-  zodiac_result = get_chinese_zodiac(year)
-  date_value = calculate_date_value(year, month, day)
+  zodiac_result = ChineseZodiac.new().get_chinese_zodiac(date.get_year)
+  date_value = calculate_date_value(date.get_year, date.get_month, date.get_day)
   date_value = reduce_date_value(date_value)
-  character_string = get_characteristics(date_value)
+  character_string = Personality.new().get_characteristics(date_value)
   date_value = date_value.to_s
-  print_result(convert_to_date(year, month, day), zodiac_result, date_value, character_string)
+  print_result(convert_to_date(date.get_year, date.get_month, date.get_day), zodiac_result, date_value, character_string)
 end
