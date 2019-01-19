@@ -32,13 +32,13 @@ class Analyzer
   end
 
   # Metoda dzielaca argument na rok/miesiac/dzien
-  def self.split_date(date)
+  def self.split_date(date_string)
     counter = 0
     splitted = ['', '', '']
-    date.each_char do |char|
-      if(i<4)
+    date_string.each_char do |char|
+      if(counter<4)
         splitted[0] = splitted[0] + char
-      elsif(i<6)
+      elsif(counter<6)
         splitted[1] = splitted[1] + char
       else
         splitted[2] = splitted[2] + char
@@ -91,14 +91,6 @@ class Analyzer
     return date_value
   end
 
-  # Metoda sprowadzajaca date do czytelnego formatu
-  def self.convert_to_date(year, month, day)
-    year = year.to_s
-    month = month.to_s
-    day = day.to_s
-    return year + " " + month + " " + day
-  end
-
   # Metoda drukujaca wynik analizy
   def self.print_result(date, zodiac_result, date_value, character_string)
     print date + "\n"
@@ -110,7 +102,6 @@ class Analyzer
   wrong = check_argument_length(date)
   wrong = check_argument_chars(date)
   date = split_date(date)
-  # konwersja na inta w celu porownywania
   date = Date.new(date)
   wrong_year = date.year_valid?
   wrong_month = date.month_valid?
@@ -121,5 +112,5 @@ class Analyzer
   date_value = reduce_date_value(date_value)
   character_string = Personality.new().get_characteristics(date_value)
   date_value = date_value.to_s
-  print_result(convert_to_date(date.get_year, date.get_month, date.get_day), zodiac_result, date_value, character_string)
+  print_result(date.to_string, zodiac_result, date_value, character_string)
 end

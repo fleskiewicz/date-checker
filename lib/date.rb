@@ -106,6 +106,11 @@ class Date
     return wrong_day
   end
 
+  # Metoda sprowadzajaca date do czytelnego formatu
+  def to_string
+    return @year.to_s + " " + @month.to_s + " " + @day.to_s
+  end
+
   def get_year
     return @year
   end
