@@ -8,10 +8,6 @@ require './chinese_zodiac.rb'
 class Analyzer
 
   date = ARGV[0].to_s
-  wrong = false
-  wrong_year = false
-  wrong_month = false
-  wrong_day = false
 
   # Metoda sprawdzajaca czy dlugosc argumentu jest prawidlowa dla daty
   def self.check_argument_length(argument)
