@@ -17,39 +17,33 @@ class Analyzer
   def self.check_argument_length(argument)
     if argument.length != 8
       puts "wrong length"
-      return true
+      exit
     end
-    return false
   end
 
   # Metoda sprawdzajaca czy wszystkie znaki w argumencie sa cyframi
   def self.check_argument_chars(argument)
     argument.each_char do |char|
       if !(char =~ /[[:digit:]]/)
-		    puts "wrong characters"
-        return true
+        puts "wrong characters"
+        exit
       end
     end
-    return false
   end
 
   # Metoda dzielaca argument na rok/miesiac/dzien
-  def self.split_date(date, is_wrong)
-    if is_wrong == true
-	    puts "popracuj nad argumentem"
-    else
-      i = 0
-      splitted = ['', '', '']
-      date.each_char do |char|
-        if(i<4)
-          splitted[0] = splitted[0] + char
-        elsif(i<6)
-          splitted[1] = splitted[1] + char
-        else
-          splitted[2] = splitted[2] + char
-        end
-        i = i + 1
+  def self.split_date(date)
+    counter = 0
+    splitted = ['', '', '']
+    date.each_char do |char|
+      if(i<4)
+        splitted[0] = splitted[0] + char
+      elsif(i<6)
+        splitted[1] = splitted[1] + char
+      else
+        splitted[2] = splitted[2] + char
       end
+        counter += 1
     end
     return splitted
   end
@@ -123,7 +117,7 @@ class Analyzer
 
   wrong = check_argument_length(date)
   wrong = check_argument_chars(date)
-  date = split_date(date, wrong)
+  date = split_date(date)
   # konwersja na inta w celu porownywania
   date = Date.new(date)
   wrong_year = date.year_valid?
