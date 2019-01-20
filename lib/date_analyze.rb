@@ -46,15 +46,15 @@ class Analyzer
 
   # Metoda drukujaca komunikaty o zlych argumentach
   def self.print_bad_arguments(date)
-    if date.year_valid?
+    if date.year_not_valid?
       puts "wrong year"
     end
 
-    if date.month_valid?
+    if date.month_not_valid?
       puts "wrong month"
     end
 
-    if date.day_valid?
+    if date.day_not_valid?
       puts "wrong day"
     end
   end
