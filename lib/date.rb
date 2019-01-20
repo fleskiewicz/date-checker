@@ -47,8 +47,12 @@ class Date
     return false
   end
 
+  def thirty_days_month
+    return @month == 4 || @month == 6 || @month == 9 || @month == 11
+  end
+
   def wrong_day_number_in_month
-    if (@month==4 || @month==6 || @month==9 || @month==11) && @day > 30
+    if thirty_days_month && @day > 30
       return true
     else
       return check_february
@@ -60,6 +64,7 @@ class Date
     if (day_number_less_than_one || @day > 31)
       return true
     end
+    return false
   end
 
   # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 1
