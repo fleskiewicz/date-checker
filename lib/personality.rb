@@ -17,8 +17,8 @@ class Personality
   # Metoda tworzaca stringa z wybranymi cechami charakteru
   def get_characteristics(date_value)
     character_string = String.new
-    @characteristics[date_value].each do |c|
-      character_string << c
+    @characteristics[date_value].each do |trait|
+      character_string << trait
       character_string << ", "
     end
     character_string = character_string[0..-3]
