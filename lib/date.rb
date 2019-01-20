@@ -36,25 +36,7 @@ class Date
     return false
   end
 
-  # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 1
-  # i nie wiekszy od liczby dni w miesiacu
-  def day_valid?()
-    wrong_day = false
-    is_february = check_if_february()
-    # Sprawdzenie czy ilosc dni nie jest mniejsza od 1 lub wieksza od 31
-    if (check_if_day_number_not_less_than_one || @day > 31)
-      wrong_day = true
-    end
-
-    # Sprwdzenie czy ilosc dni w danym miesiacu sie zgadza
-    if (@month==4 || @month==6 || @month==9 || @month==11) && @day > 30
-      wrong_day = true
-    elsif is_february && @day > 28
-      wrong_day = true
-    else
-      "something is wrong with month"
-    end
-
+  def leap_year_days(wrong_day)
     # sprawdzenie w przypadku roku przestepnego
     if (@year % 4 == 0 && @year % 100 != 100) || (@year % 400 == 0)
       if is_february
@@ -64,6 +46,32 @@ class Date
         end
       end
     end
+  end
+
+  def correct_days_number_in_month(wrong_day)
+    if (@month==4 || @month==6 || @month==9 || @month==11) && @day > 30
+      wrong_day = true
+    elsif check_if_february() && @day > 28
+      wrong_day = true
+    else
+      "something is wrong with month"
+    end
+  end
+
+  def is_days_number_possible(wrong_day)
+    # Sprawdzenie czy ilosc dni nie jest mniejsza od 1 lub wieksza od 31
+    if (check_if_day_number_not_less_than_one || @day > 31)
+      wrong_day = true
+    end
+  end
+
+  # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 1
+  # i nie wiekszy od liczby dni w miesiacu
+  def day_valid?()
+    wrong_day = false
+    is_days_number_possible(wrong_day)
+    correct_days_number(wrong_day)
+    leap_year_days(wrong_day)
     return wrong_day
   end
 
