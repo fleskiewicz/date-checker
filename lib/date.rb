@@ -39,7 +39,7 @@ class Date
   def leap_year_days
     # sprawdzenie w przypadku roku przestepnego
     if (@year % 4 == 0 && @year % 100 != 100) || (@year % 400 == 0)
-      if is_february
+      if check_if_february
         return false
         if check_if_day_number_not_less_than_one || @day > 29
           return true
