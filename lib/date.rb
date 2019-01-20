@@ -22,20 +22,27 @@ class Date
     return true
   end
 
+  def check_if_february()
+    if (@month == 2)
+      return true
+    end
+    return false
+  end
+
   # Metoda sprawdzajaca czy numer dnia nie jest mniejszy od 1
   # i nie wiekszy od liczby dni w miesiacu
   def day_valid?()
     wrong_day = false
-
+    is_february = check_if_february()
     # Sprawdzenie czy ilosc dni nie jest mniejsza od 1 lub wieksza od 31
     if (@day < 1 || @day > 31)
       wrong_day = true
     end
-    
+
     # Sprwdzenie czy ilosc dni w danym miesiacu sie zgadza
     if (@month==4 || @month==6 || @month==9 || @month==11) && @day > 30
       wrong_day = true
-    elsif @month == 2 && @day > 28
+    elsif is_february && @day > 28
       wrong_day = true
     else
       "something is wrong with month"
@@ -43,7 +50,7 @@ class Date
 
     # sprawdzenie w przypadku roku przestepnego
     if (@year % 4 == 0 && @year % 100 != 100) || (@year % 400 == 0)
-      if @month == 2
+      if is_february
         wrong_day = false
         if @day < 1 || @day > 29
           wrong_day = true
