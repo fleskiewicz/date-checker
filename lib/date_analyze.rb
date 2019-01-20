@@ -87,17 +87,25 @@ class Analyzer
     return date_value
   end
 
-  # Metoda drukujaca wynik analizy
-  def self.print_result(date, zodiac_result, date_value, character_string)
+  def self.print_date(date)
     print date + "\n"
+  end
+
+  def self.print_chinese_zodiac_sign(zodiac_result)
     print "Chinski znak zodiaku: " + zodiac_result + "\n"
+  end
+
+  def self.print_numerological_digit(date_value)
     print "Numerologiczna cyfra: " + date_value + "\n"
+  end
+
+  def self.print_character_traits(character_string)
     print "Cechy charakteru: " + character_string + "\n"
   end
 
   check_argument_length(date)
   check_argument_chars(date)
-  date = split_date(date)
+  date = split_argument(date)
   date = Date.new(date)
   print_bad_arguments(date)
   zodiac_result = ChineseZodiac.new().get_chinese_zodiac(date.get_year)
@@ -105,5 +113,8 @@ class Analyzer
   date_value = reduce_date_value(date_value)
   character_string = Personality.new().get_characteristics(date_value)
   date_value = date_value.to_s
-  print_result(date.to_string, zodiac_result, date_value, character_string)
+  print_date(date.to_string)
+  print_chinese_zodiac_sign(zodiac_result)
+  print_numerological_digit(date_value)
+  print_character_traits(character_string)
 end
