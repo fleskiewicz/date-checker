@@ -7,8 +7,6 @@ require './chinese_zodiac.rb'
 # Klasa do analizy daty
 class Analyzer
 
-  date = ARGV[0].to_s
-
   # Metoda sprawdzajaca czy dlugosc argumentu jest prawidlowa dla daty
   def self.check_argument_length(argument)
     if argument.length != 8
@@ -30,17 +28,8 @@ class Analyzer
   # Metoda dzielaca argument na rok/miesiac/dzien
   def self.split_argument(date_string)
     counter = 0
-    splitted = ['', '', '']
-    date_string.each_char do |char|
-      if(counter<4)
-        splitted[0] = splitted[0] + char
-      elsif(counter<6)
-        splitted[1] = splitted[1] + char
-      else
-        splitted[2] = splitted[2] + char
-      end
-        counter += 1
-    end
+    splitted = [date_string[0, 4], date_string[4, 2], date_string[6, 2]]
+
     return splitted
   end
 
@@ -104,6 +93,7 @@ class Analyzer
     print "Cechy charakteru: " + character_string + "\n"
   end
 
+  date = ARGV[0].to_s
   check_argument_length(date)
   check_argument_chars(date)
   date = split_argument(date)
