@@ -8,10 +8,9 @@ class Date
 
   # Metoda sprawdzajaca czy rok miesci sie w przedziale 1900-2019
   def year_not_valid?
-    if (@year > 1900) && (@year < 2020)
+    if (@year > 1899) && (@year < 2020)
       return false
     end
-
     return true
   end
 
@@ -20,22 +19,22 @@ class Date
     if (@month > 0) && (@month < 13)
       return false
     end
-
     return true
   end
-
+  # Metoda sprawdzajaca czy dni nie jest mniej niz jeden
   def day_number_less_than_one
     if @day < 1
       return true
     end
-
     return false
   end
 
+  # Metoda sprawdzajaca rok przestepny
   def leap_year?
     return (@year % 4 == 0 && @year % 100 != 100) || (@year % 400 == 0)
   end
 
+  # Metoda sprawdzajaca czy miesiac jest lutym oraz ilosc dni
   def check_february()
     if @month == 2
       if leap_year? && @day > 29
@@ -47,10 +46,12 @@ class Date
     return false
   end
 
+  # Metoda sprawdzajaca czy podany miesiac jest 30 dniowy
   def thirty_days_month
     return @month == 4 || @month == 6 || @month == 9 || @month == 11
   end
 
+  # Metoda sprawdzajaca czy ilosc dni nie jest wieksza od dni w 30 dniowym miesiacu
   def wrong_day_number_in_month
     if thirty_days_month && @day > 30
       return true

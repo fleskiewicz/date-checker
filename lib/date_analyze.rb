@@ -27,9 +27,7 @@ class Analyzer
 
   # Metoda dzielaca argument na rok/miesiac/dzien
   def self.split_argument(date_string)
-    counter = 0
     splitted = [date_string[0, 4], date_string[4, 2], date_string[6, 2]]
-
     return splitted
   end
 
@@ -69,14 +67,13 @@ class Analyzer
 
   # Metoda obliczajaca wartosc podanej daty sumujac wszystkie jej cyfry
   def self.calculate_date_value(year, month, day)
-    date_value = 0
-    date_value += increase_date_value(year)
+    date_value = increase_date_value(year)
     date_value += increase_date_value(month)
     date_value += increase_date_value(day)
     return reduce_date_value(date_value)
   end
 
-  # Metoda drukujaca wynik analizy
+  # Metody drukujace wynik analizy
   def self.print_date(date)
     print date + "\n"
   end
@@ -93,6 +90,7 @@ class Analyzer
     print "Cechy charakteru: " + character_string + "\n"
   end
 
+  # Wywolywanie metod
   date = ARGV[0].to_s
   check_argument_length(date)
   check_argument_chars(date)
